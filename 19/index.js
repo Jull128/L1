@@ -36,20 +36,10 @@ function loadPosts() {
         postImg.innerHTML = img;
         postDiv.appendChild(postImg);
       });
-
-      //   localStorage.setItem("vkPosts", JSON.stringify(posts));
     })
     .catch((error) => {
       console.error("Ошибка при загрузке постов:", error);
     });
-
-  // Вывод постов в виджете
-  // widget.innerHTML = '';
-  // posts.forEach(post => {
-  //   const postElement = document.createElement('div');
-  //   postElement.textContent = post.text;
-  //   widget.appendChild(postElement);
-  // });
 }
 
 function loadMorePosts() {
@@ -88,23 +78,10 @@ function loadMorePosts() {
         postImg.innerHTML = img;
         postDiv.appendChild(postImg);
       });
-
-      //   localStorage.setItem("vkPosts", JSON.stringify(posts));
     })
     .catch((error) => {
       console.error("Ошибка при загрузке постов:", error);
     });
-
-  // Обработка полученных данных
-  // const newPosts = response.items;
-  // posts = posts.concat(newPosts);
-
-  // Вывод дополнительных постов в виджете
-  // posts.forEach((post) => {
-  //   const postElement = document.createElement("div");
-  //   postElement.textContent = post.text;
-  //   widget.appendChild(postElement);
-  // });
 }
 
 function savePostsToCache() {
@@ -123,7 +100,7 @@ function loadPostsFromCache() {
 
 function evictOldPosts() {
   // Вытеснение старых постов при переполнении localStorage
-  const MAX_CACHE_SIZE = 20;
+  const MAX_CACHE_SIZE = 100;
   if (localStorage.length >= MAX_CACHE_SIZE) {
     const oldestKey = localStorage.key(0);
     localStorage.removeItem(oldestKey);

@@ -99,20 +99,6 @@ function loadPostsFromCache() {
   }
 }
 
-function calculateLocalStorageSize() {
-  let totalSize = 0;
-
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-
-    const value = localStorage.getItem(key);
-
-    totalSize += key.length + value.length;
-  }
-
-  return totalSize;
-}
-
 function logLocalStorageSize() {
   const maxSize = 5 * 1024 * 1024; // Максимальный размер LocalStorage (5MB)
   const currentSize = new Blob(Object.values(localStorage)).size;

@@ -68,7 +68,6 @@ function loadMorePosts() {
         let img = "";
         postDiv.className = "card";
         if (post.text) {
-          console.log(post);
           postDiv.textContent = post.text;
           widget.appendChild(postDiv);
         }
@@ -77,6 +76,7 @@ function loadMorePosts() {
         });
         postImg.innerHTML = img;
         postDiv.appendChild(postImg);
+        savePostsToCache();
       });
     })
     .catch((error) => {
@@ -87,6 +87,7 @@ function loadMorePosts() {
 function savePostsToCache() {
   // Сохранение постов в localStorage
   localStorage.setItem("posts", JSON.stringify(posts));
+  logLocalStorageSize();
 }
 
 function loadPostsFromCache() {
@@ -98,10 +99,36 @@ function loadPostsFromCache() {
   }
 }
 
+function calculateLocalStorageSize() {
+  let totalSize = 0;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+
+    const value = localStorage.getItem(key);
+
+    totalSize += key.length + value.length;
+  }
+
+  return totalSize;
+}
+
+function logLocalStorageSize() {
+  const maxSize = 5 * 1024 * 1024; // Максимальный размер LocalStorage (5MB)
+  const currentSize = new Blob(Object.values(localStorage)).size;
+  const percentage = (currentSize / maxSize) * 100;
+  console.log(
+    `Занятое место в LocalStorage: ${currentSize} байт / ${maxSize} байт (${percentage.toFixed(
+      2
+    )}%)`
+  );
+}
+
 function evictOldPosts() {
   // Вытеснение старых постов при переполнении localStorage
-  const MAX_CACHE_SIZE = 100;
-  if (localStorage.length >= MAX_CACHE_SIZE) {
+  const maxSize = 5 * 1024 * 1024;
+
+  if (localStorage.length >= maxSize) {
     const oldestKey = localStorage.key(0);
     localStorage.removeItem(oldestKey);
   }
@@ -117,5 +144,5 @@ widget.addEventListener("scroll", handleScroll);
 window.addEventListener("beforeunload", savePostsToCache);
 window.addEventListener("load", loadPostsFromCache);
 window.addEventListener("storage", evictOldPosts);
-
+logLocalStorageSize();
 loadPosts();

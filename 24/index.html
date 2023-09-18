@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Таблица данных</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        cursor: pointer;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .active {
+        background-color: #4caf50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="data-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">First Name</th>
+          <th onclick="sortTable(1)">Last Name</th>
+          <th onclick="sortTable(2)">Phone</th>
+          <th onclick="sortTable(3)">Address</th>
+          <th onclick="sortTable(4)">City</th>
+          <th onclick="sortTable(5)">State</th>
+          <th onclick="sortTable(6)">Zip</th>
+        </tr>
+      </thead>
+      <tbody id="data-body"></tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+      // Загрузка данных при загрузке страницы
+      window.onload = function () {
+        loadData();
+      };
+
+      // Загрузка данных из источника
+      function loadData() {
+        fetch(
+          "http://www.filltext.com/?rows=1000&fname=%7BfirstName%7D&lname=%7BlastName%7D&tel=%7Bphone%7Cformat%7D&address=%7BstreetAddress%7D&city=%7Bcity%7D&state=%7BusState%7Cabbr%7D&zip=%7Bzip%7D&pretty=true"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            renderTable(data);
+            renderPagination(data);
+          })
+          .catch((error) => console.log(error));
+      }
+
+      // Отрисовка таблицы
+      function renderTable(data) {
+        const tableBody = document.getElementById("data-body");
+        tableBody.innerHTML = "";
+
+        data.forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>${item.fname}</td>
+                    <td>${item.lname}</td>
+                    <td>${item.tel}</td>
+                    <td>${item.address}</td>
+                    <td>${item.city}</td>
+                    <td>${item.state}</td>
+                    <td>${item.zip}</td>
+                `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Отрисовка пагинации
+      function renderPagination(data) {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        const totalPages = Math.ceil(data.length / 50);
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.innerText = i;
+          button.addEventListener("click", function () {
+            paginate(data, i);
+          });
+          pagination.appendChild(button);
+        }
+      }
+
+      // Пагинация данных
+      function paginate(data, page) {
+        const startIndex = (page - 1) * 50;
+        const endIndex = startIndex + 50;
+        const paginatedData = data.slice(startIndex, endIndex);
+        renderTable(paginatedData);
+      }
+
+      // Сортировка таблицы
+      function sortTable(column) {
+        const table = document.getElementById("data-table");
+        const rows = Array.from(table.rows).slice(1); // Пропускаем заголовок таблицы
+
+        rows.sort((a, b) => {
+          const cellA = a.cells[column].textContent.toLowerCase();
+          const cellB = b.cells[column].textContent.toLowerCase();
+          return cellA.localeCompare(cellB);
+        });
+
+        table.tBodies[0].append(...rows);
+      }
+    </script>
+  </body>
+</html>

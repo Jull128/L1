@@ -1,24 +1,32 @@
-function createAndStyleElement(tagName, styles) {
-  // Создаем новый элемент
-  const element = document.createElement(tagName);
+let i = 0;
 
-  // Применяем стили к элементу
-  for (const property in styles) {
-    element.style[property] = styles[property];
-  }
+const func = () => {
+  i++;
 
-  // Добавляем элемент в DOM
-  document.body.appendChild(element); // Или любой другой родительский элемент
-
-  return element;
-}
-
-// Пример использования
-const styles = {
-  width: "200px",
-  height: "100px",
-  backgroundColor: "red",
-  color: "white",
+  func();
 };
 
-const newElement = createAndStyleElement("div", styles);
+try {
+  func();
+} catch (e) {
+  // Словили ошибку переполнения стэка и вывели значение счетчика в консоль
+  console.log(i);
+}
+//13914
+
+//v2
+let i = 0;
+
+const func = () => {
+  let someVariable = i + 1;
+  i++;
+
+  func();
+};
+
+try {
+  func();
+} catch (e) {
+  console.log(i);
+}
+//12523

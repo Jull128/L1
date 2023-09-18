@@ -20,12 +20,12 @@ function loadImage(url) {
   });
 }
 
-//   const imageUrl = "https://example.com/image.jpg";
+const imageUrl = "./cat.jpg";
 
-//   loadImage(imageUrl)
-//     .then(imageData => {
-//       console.log("Изображение успешно загружено:", imageData);
-//     })
-//     .catch(error => {
-//       console.error("Ошибка загрузки изображения:", error);
-//     });
+loadImage(imageUrl)
+  .then((imageData) => {
+    console.log("Изображение успешно загружено:", imageData);
+  })
+  .catch((error) => {
+    console.error("Ошибка загрузки изображения:", error);
+  });

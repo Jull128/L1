@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        width: 250px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      input {
+        width: 240px;
+        height: 25px;
+        border-radius: 7px;
+        border-style: none;
+        border: 1px solid black;
+        padding: 5px;
+      }
+      ul.listBox {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        list-style-type: none;
+        padding: 5px;
+        border-radius: 7px;
+        border: 1px solid black;
+      }
+      .list {
+        padding: 5px;
+      }
+      .list:hover {
+        border-radius: 7px;
+
+        background-color: gainsboro;
+      }
+    </style>
+    <title>Поле ввода адреса с геокодингом</title>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" id="addressInput" placeholder="Введите адрес" />
+      <ul id="addressList"></ul>
+    </div>
+    <script>
+      const addressInput = document.getElementById("addressInput");
+      const addressList = document.getElementById("addressList");
+
+      // Указываем, что нам нужно ждать 500 мс,
+      // прежде чем запустить обработчик:
+      const debouncedGeocode = debounce(geocode, 500);
+      // Передаём новую debounced-функцию в addEventListener:
+      addressInput.addEventListener("input", debouncedGeocode);
+
+      function geocode() {
+        const address = addressInput.value;
+        // API_KEY для запроса геокодирования
+        const apiKey = "e3f8d564-c585-4c1a-9fc4-55ffb9fee15e";
+        // Очищаем список адресов
+        addressList.innerHTML = "";
+
+        // Проверяем, что введенный адрес не пустой
+        if (address.trim() !== "") {
+          // URL для запроса геокодирования
+          const geocodeUrl = `https://geocode-maps.yandex.ru/1.x/?apikey=${apiKey}&geocode=${address}&format=json`;
+
+          // Отправляем fetch запрос
+          fetch(geocodeUrl)
+            .then((response) => response.json())
+            .then((data) => {
+              // Получаем список найденных адресов
+              const foundAddresses =
+                data.response.GeoObjectCollection.featureMember;
+              addressList.className = "listBox";
+              // Создаем элементы списка и добавляем их в выпадающий список
+              foundAddresses.forEach((address) => {
+                const listItem = document.createElement("li");
+                listItem.className = "list";
+                listItem.textContent = address.GeoObject.name;
+                listItem.addEventListener("click", () => {
+                  // При клике на элемент списка, выбираем его значение и устанавливаем в поле ввода
+                  addressInput.value = address.GeoObject.name;
+                  addressList.innerHTML = "";
+                  addressList.className = "";
+                });
+                addressList.appendChild(listItem);
+              });
+            })
+            .catch((error) => {
+              console.error("Ошибка при выполнении геокодирования:", error);
+            });
+        }
+      }
+
+      // Функция для задержки выполнения функции
+      function debounce(func, timeout) {
+        let timer;
+        return function () {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            func(), timeout;
+          });
+        };
+      }
+    </script>
+  </body>
+</html>

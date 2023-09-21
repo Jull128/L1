@@ -7,8 +7,7 @@ function loadPosts() {
   // Количество постов
   const count = 5;
   // Ваш access token VK API (Standalone приложение)
-  const accessToken =
-    "829dd970829dd970829dd970318188793c8829d829dd970e79f4a3ac6c668d9fff6cab6";
+  const accessToken = "TOKEN";
 
   // Вызов метода "wall.get" VK API для получения списка постов
   fetch(
@@ -48,8 +47,7 @@ function loadMorePosts() {
   const count = 5;
   const offset = posts.length;
   // Ваш access token VK API  (Standalone приложение)
-  const accessToken =
-    "829dd970829dd970829dd970318188793c8829d829dd970e79f4a3ac6c668d9fff6cab6";
+  const accessToken = "TOKEN";
 
   // Вызов метода "wall.get" VK API для получения списка постов
   fetch(

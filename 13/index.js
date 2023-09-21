@@ -2,19 +2,20 @@ class Shape {
   constructor(name) {
     this.name = name;
   }
-
+  // вывод площади
   getAreaShape(area) {
     console.log(`Calculating area of ${this.name} is equal to: ${area}`);
   }
+  // вывод периметра
   getPerimeterShape(perimeter) {
     console.log(
       `Calculating perimeter of ${this.name} is equal to: ${perimeter}`
     );
   }
 }
-
+// подкласс для окружности
 class Circle extends Shape {
-  constructor(x, y, radius) {
+  constructor(radius) {
     super("circle");
     this.radius = radius;
   }
@@ -27,7 +28,7 @@ class Circle extends Shape {
     this.getAreaShape(Math.round(2 * Math.PI * this.radius));
   }
 }
-
+// подкласс для прямоугольника
 class Rectangle extends Shape {
   constructor(x, y) {
     super("rectangle");
@@ -43,7 +44,7 @@ class Rectangle extends Shape {
     this.getAreaShape(this.x * 2 + this.y * 2);
   }
 }
-
+// подкласс для треугольника
 class Triangle extends Shape {
   constructor(x, y, z) {
     super("triangle");
@@ -72,7 +73,7 @@ class Triangle extends Shape {
   }
 }
 
-let circle = new Circle(1, 2, 3);
+let circle = new Circle(3);
 let rectangle = new Rectangle(2, 3);
 let triangle = new Triangle(5, 6, 7);
 circle.getArea();

@@ -10,5 +10,3 @@ var json = {
 
 var jsonString = convertJSONToString(json);
 console.log(jsonString);
-
-// 9

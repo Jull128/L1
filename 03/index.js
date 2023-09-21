@@ -95,7 +95,7 @@ var MathX = (function () {
 })();
 
 // Примеры использования
-console.log(MathX.fibonacci(5)); // Выведет: 5
-console.log(MathX.fibonacciSeries(8)); // Выведет: [0, 1, 1, 2, 3, 5, 8, 13, 21]
-console.log(MathX.nthPrime(4)); // Выведет: 7
-console.log(MathX.primesUpToN(20)); // Выведет: [2, 3, 5, 7, 11, 13, 17, 19]
+console.log(MathX.fibonacci(5)); //  5
+console.log(MathX.fibonacciSeries(8)); // [0, 1, 1, 2, 3, 5, 8, 13, 21]
+console.log(MathX.nthPrime(4)); // 7
+console.log(MathX.primesUpToN(20)); // [2, 3, 5, 7, 11, 13, 17, 19]

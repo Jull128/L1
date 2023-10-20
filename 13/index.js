@@ -25,7 +25,7 @@ class Circle extends Shape {
   }
 
   getPerimeter() {
-    this.getAreaShape(Math.round(2 * Math.PI * this.radius));
+    this.getPerimeterShape(Math.round(2 * Math.PI * this.radius));
   }
 }
 // подкласс для прямоугольника
@@ -41,7 +41,7 @@ class Rectangle extends Shape {
   }
 
   getPerimeter() {
-    this.getAreaShape(this.x * 2 + this.y * 2);
+    this.getPerimeterShape(this.x * 2 + this.y * 2);
   }
 }
 // подкласс для треугольника
@@ -69,7 +69,7 @@ class Triangle extends Shape {
   }
 
   getPerimeter() {
-    this.getAreaShape(this.x + this.y + this.z);
+    this.getPerimeterShape(this.x + this.y + this.z);
   }
 }
 

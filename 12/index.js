@@ -13,9 +13,9 @@ let book = {
   },
 
   set fullName(value) {
-    [this.title, this.author, this.year] = value.split(" ");
+    [this.title, this.author, this.year] = value.split(",");
   },
 };
 
 book.getAll();
-book.fullName = "Dandelion Ray 1957";
+book.fullName = "Dandelion, Ray, 1957";

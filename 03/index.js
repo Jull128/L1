@@ -63,6 +63,18 @@ var MathX = (function () {
     return true;
   }
 
+  /*function isPrime(number) {
+    if (number <= 1) {
+        return false;
+    }
+    for (let i = 2; i < number; i++) {
+        if (number % i === 0) {
+            return false;
+        }
+    }
+    return true;
+} */
+
   // Функция для вычисления всех простых чисел до числа N (с использованием решета Эратосфена)
   function primesUpToN(n) {
     const isPrimeArray = new Array(n + 1).fill(true);
